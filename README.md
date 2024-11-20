@@ -2,9 +2,6 @@
 
 Documentation: https://documenter.getpostman.com/view/18146738/2s935pqP8M
 
-## Author: 
-Catherine Muthoni
-
 ## Description
 This is a Expressjs application that enables freelancers to track their payments by sending invoices and payment reminders to their clients
 
