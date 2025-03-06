@@ -1,29 +1,12 @@
-import Sequelize from "sequelize";
-import dbConfig from "./config.js";
+import mongoose from "mongoose";
 
-export const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
-    host: dbConfig.HOST,
-    dialect: dbConfig.dialect,
-    operatorsAliases: false,
-    pool: {
-        max: dbConfig.pool.max,
-        min: dbConfig.pool.min,
-        acquire: dbConfig.pool.acquire,
-        idle: dbConfig.pool.idle
-    }
-});
+const mongoURI = "mongodb://127.0.0.1:27017/invoicingApp"; // Replace "invoicingApp" with your database name
 
-sequelize.authenticate()
-    .then(() => {
-        console.log("Connection Successful");
-    })
-    .catch(err => {
-        console.log("Connection Failed:", err);
-    });
+mongoose.connect(mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+.then(() => console.log("MongoDB Connected Successfully"))
+.catch(err => console.error("MongoDB Connection Failed:", err));
 
-sequelize.sync({ force:true }).then(() => {
-        console.log("All models were synchronized successfully.");
-    })
-    .catch(err => {
-        console.log("Models Failed:", err);
-    });
+export default mongoose;

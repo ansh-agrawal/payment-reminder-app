@@ -1,37 +1,25 @@
-import { DataTypes } from "sequelize";
-import { sequelize } from "../db/dbConnect.js";
+import mongoose from "mongoose";
 
-const User = sequelize.define('user', {
+const userSchema = new mongoose.Schema({
     Email: { 
-        type: DataTypes.STRING,
-        allowNull: false,
-        primaryKey: true
+        type: String,
+        required: true,
+        unique: true
     },
     User_Name: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: String,
+        required: true
     },
     Password: {
-        type: DataTypes.STRING,
-        allowNull: false
-
+        type: String,
+        required: true
     }
-}, {
-
-    sequelize,
-    tableName: 'user',
-    timestamps: false,
-    indexes: [
-      {
-        name: "PRIMARY",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "Email" },
-        ]
-      },
-    ]
-  
+}, { 
+    collection: "user", // Equivalent to tableName in Sequelize
+    timestamps: false // No automatic createdAt and updatedAt
 });
 
-export default User
+// Creating the model
+const User = mongoose.model("User", userSchema);
+
+export default User;

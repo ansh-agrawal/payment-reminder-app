@@ -1,42 +1,29 @@
-import { DataTypes } from "sequelize";
-import { sequelize } from "../db/dbConnect.js";
+import mongoose from "mongoose";
 
-const Client = sequelize.define('client', {
+const clientSchema = new mongoose.Schema({
     Email: { 
-        type: DataTypes.STRING,
-        allowNull: false,
-        primaryKey: true
+        type: String,
+        required: true,
+        unique: true
     },
     Id_Number: {
-        type: DataTypes.INTEGER,
-        allowNull: false
+        type: Number,
+        required: true
     },
-
     Client_Name: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: String,
+        required: true
     },
     Phone: {
-        type: DataTypes.BIGINT,
-        allowNull: false
-
+        type: Number,
+        required: true
     }
-}, {
-
-    sequelize,
-    tableName: 'client',
-    timestamps: false,
-    indexes: [
-      {
-        name: "PRIMARY",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "Email" },
-        ]
-      },
-    ]
-  
+}, { 
+    collection: "client", // Equivalent to tableName in Sequelize
+    timestamps: false // Disables automatic `createdAt` and `updatedAt`
 });
 
-export default Client
+// Creating the model
+const Client = mongoose.model("Client", clientSchema);
+
+export default Client;
