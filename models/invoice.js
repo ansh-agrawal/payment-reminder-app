@@ -1,67 +1,46 @@
-import {DataTypes} from 'sequelize';
-import {sequelize} from "../db/dbConnect.js";
+import mongoose from "mongoose";
 
-const Invoice = sequelize.define('invoice', {
+const invoiceSchema = new mongoose.Schema({
     InvoiceId: {
-      autoIncrement: true,
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
+        type: Number,
+        required: true,
+        unique: true
     },
     Email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      references: {
-        model: 'client',
-        key: 'Email'
-      }
+        type: String,
+        required: true,
+        ref: "Client" // Reference to Client model
     },
     Location: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: String,
+        required: true
     },
     Address: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: String,
+        required: true
     },
     Task: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: String,
+        required: true
     },
     Amount: {
-      type: DataTypes.INTEGER,
-      allowNull: false
+        type: Number,
+        required: true
     },
     DueDate: {
-      type: DataTypes.DATE,
-      allowNull: false
-      
+        type: Date,
+        required: true
     },
     Paid: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: false
+        type: Boolean,
+        default: false
     }
-  }, {
-    sequelize,
-    tableName: 'invoice',
-    timestamps: true,
-    indexes: [
-      {
-        name: "PRIMARY",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "InvoiceId" },
-        ]
-      },
-      {
-        name: "Email",
-        using: "BTREE",
-        fields: [
-          { name: "Email" },
-        ]
-      }
-    ]
-  });
-export default Invoice
+}, {
+    collection: "invoice",
+    timestamps: true // Automatically adds `createdAt` & `updatedAt`
+});
+
+// Creating the model
+const Invoice = mongoose.model("Invoice", invoiceSchema);
+
+export default Invoice;
