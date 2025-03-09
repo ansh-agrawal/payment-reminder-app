@@ -8,7 +8,7 @@ dotenv.config()
 
 var transport = nodemailer.createTransport({
   host: "smtp.sendgrid.net",
-  port: 25,
+  port: 587,
   auth: {
     user: "apikey",
     pass: process.env.SENDGRID_API_KEY
